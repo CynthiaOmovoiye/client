@@ -30,25 +30,25 @@ const Auth = () => {
     }
     const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log(form)
+        // console.log(form)
 
-        // const { username, password, phoneNumber, avatarURL} = form;
-        // const url = 'https://pagerapp.herokuapp.com/auth';
-        // const {data: {token, userId, hashedPassword, fullName }} = await axios.post(`${url}/${isSignup?'signup': 'login'}`,
-        // {
-        //     fullName:form.fullName, username, password, phoneNumber, avatarURL 
-        // })
-        // cookies.set('token', token);
-        // cookies.set('userId', userId);
-        // cookies.set('fullName', fullName);
-        // cookies.set('username', username);
-        // if(isSignup){
-        //     cookies.set('phoneNumber', phoneNumber);
-        //     cookies.set('avatarURL', avatarURL);
-        //     cookies.set('hashedPassword', hashedPassword); 
-        // }
+        const { username, password, phoneNumber, avatarURL} = form;
+        const url = 'https://pagerapp.herokuapp.com/auth';
+        const {data: {token, userId, hashedPassword, fullName }} = await axios.post(`${url}/${isSignup?'signup': 'login'}`,
+        {
+            fullName:form.fullName, username, password, phoneNumber, avatarURL 
+        })
+        cookies.set('token', token);
+        cookies.set('userId', userId);
+        cookies.set('fullName', fullName);
+        cookies.set('username', username);
+        if(isSignup){
+            cookies.set('phoneNumber', phoneNumber);
+            cookies.set('avatarURL', avatarURL);
+            cookies.set('hashedPassword', hashedPassword); 
+        }
 
-        // window.location.reload()
+        window.location.reload()
     }
     const switchMode = () => {
         setIsSignup((prevIsSignup) => !prevIsSignup);
@@ -89,6 +89,7 @@ const Auth = () => {
                             <div className="auth__form-container_fields-content_input">
                                 <label htmlFor="phoneNumber">Phone Number</label>
                                 <ReactPhoneInput
+                                 defaultCountry="ng"
                                     onChange={(value, country) => {
                                         setForm((prevState) => {
                                             return { ...prevState, ["phoneNumber"]: `+${value}` }
